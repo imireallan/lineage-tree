@@ -1,0 +1,119 @@
+/* --- Tree Viewport & Container --- */
+.tree-viewport {
+  flex: 1;
+  overflow: auto;
+  padding: 80px;
+  background-color: #050505;
+}
+
+.tree-container {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.root-level {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --- Node Logic --- */
+.tree-node-li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  padding: 20px 10px 0 10px;
+}
+
+/* Horizontal line connecting siblings */
+.tree-node-li::before,
+.tree-node-li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 2px solid #3b2f2f;
+  width: 50%;
+  height: 20px;
+}
+
+.tree-node-li::after {
+  right: auto;
+  left: 50%;
+  border-left: 2px solid #3b2f2f;
+}
+
+/* Remove side lines for single children or edge siblings */
+.tree-node-li:only-child::after,
+.tree-node-li:only-child::before {
+  display: none;
+}
+.tree-node-li:only-child {
+  padding-top: 20px;
+}
+.tree-node-li:only-child::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 20px;
+  border-left: 2px solid #3b2f2f;
+  display: block !important;
+}
+.tree-node-li:first-child::before,
+.tree-node-li:last-child::after {
+  border: none;
+}
+
+/* --- Parents Row --- */
+.parents-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 20px;
+}
+
+/* Vertical line dropping from parents to children list */
+.parents-row::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 0;
+  height: 20px;
+  border-left: 2px solid #3b2f2f;
+}
+
+/* --- Children List --- */
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-top: 20px;
+  position: relative;
+}
+
+/* --- Cards --- */
+.person-card {
+  width: 140px;
+  background: #fdf5e6;
+  border: 1.5px solid #bfa77a;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  color: #1a1a1a;
+}
+
+.marriage-heart {
+  font-size: 14px;
+  color: #e25555;
+}
