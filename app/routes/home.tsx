@@ -72,6 +72,23 @@ export async function loader() {
 }
 
 function PersonCard({ person }: { person: Person }) {
+  const calculateAge = () => {
+    if (!person.birthDate) return null;
+
+    const birth = new Date(person.birthDate);
+    const end = person.deathDate ? new Date(person.deathDate) : new Date();
+
+    let age = end.getFullYear() - birth.getFullYear();
+    const monthDiff = end.getMonth() - birth.getMonth();
+
+    // Adjust if the birthday hasn't occurred yet in the final year
+    if (monthDiff < 0 || (monthDiff === 0 && end.getDate() < birth.getDate())) {
+      age--;
+    }
+
+    return age;
+  };
+
   const getLifespan = () => {
     if (!person.birthDate) return "Dates Unknown";
     const birthYear = new Date(person.birthDate).getFullYear();
@@ -81,13 +98,12 @@ function PersonCard({ person }: { person: Person }) {
     return `${birthYear} — Present`;
   };
 
-  // Restore initials logic
+  const age = calculateAge();
   const initials = person.name
     .split(" ")
     .map((n) => n[0])
     .join("")
     .toUpperCase();
-
   const genderClass = person.gender
     ? person.gender.toLowerCase()
     : "unknown-gender";
@@ -100,6 +116,12 @@ function PersonCard({ person }: { person: Person }) {
       <div className="card-info">
         <h3>{person.name}</h3>
         <p className="dates">{getLifespan()}</p>
+        {/* Display Age */}
+        {age !== null && (
+          <p className="age-label">
+            {person.deathDate ? `Died at ${age}` : `Age: ${age}`}
+          </p>
+        )}
       </div>
     </div>
   );
