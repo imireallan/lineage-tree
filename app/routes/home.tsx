@@ -72,37 +72,31 @@ export async function loader() {
 }
 
 function PersonCard({ person }: { person: Person }) {
-  // 1. Helper to format the lifespan string
   const getLifespan = () => {
     if (!person.birthDate) return "Dates Unknown";
-
     const birthYear = new Date(person.birthDate).getFullYear();
-
-    // If person is deceased, show death year. Otherwise, show "Present"
     if (person.deathDate) {
-      const deathYear = new Date(person.deathDate).getFullYear();
-      return `${birthYear} — ${deathYear}`;
+      return `${birthYear} — ${new Date(person.deathDate).getFullYear()}`;
     }
-
     return `${birthYear} — Present`;
   };
 
-  // 2. High-contrast Initials
-  // const initials = person.name
-  //   .split(" ")
-  //   .map((n) => n[0])
-  //   .join("")
-  //   .toUpperCase();
+  // Restore initials logic
+  const initials = person.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
 
-  // 3. Determine gender class for CSS color coding
-  // Fallback to "unknown-gender" if the field is missing
   const genderClass = person.gender
     ? person.gender.toLowerCase()
     : "unknown-gender";
 
   return (
     <div className={`person-card ${genderClass}`}>
-      <div className="avatar">{/* <span>{initials}</span> */}</div>
+      <div className="avatar">
+        <span>{initials}</span>
+      </div>
       <div className="card-info">
         <h3>{person.name}</h3>
         <p className="dates">{getLifespan()}</p>
@@ -127,56 +121,52 @@ function TreeNodeComponent({
     <li className="tree-node-li">
       <div className="family-group">
         <div className="parents-row">
-          <PersonCard person={node} />
+          {/* ANCHOR: The primary parent (e.g., Gwadenzwa) */}
+          <div className="primary-parent-container">
+            <PersonCard person={node} />
+
+            {/* The vertical connector now lives INSIDE this container */}
+            {hasChildren && isExpanded && (
+              <div className="vertical-line-anchor">
+                <svg width="2" height="40">
+                  <line
+                    x1="1"
+                    y1="0"
+                    x2="1"
+                    y2="40"
+                    stroke="#bfa77a"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
+
+          {/* The Spouses flow to the right */}
           {node.spouses.map((spouse) => (
             <React.Fragment key={spouse.id}>
               <div className="marriage-heart">❤️</div>
               <PersonCard person={spouse} />
             </React.Fragment>
           ))}
-
-          {/* Visual indicator that more children exist but are hidden */}
-          {hasChildren && !isExpanded && (
-            <div
-              className="expand-indicator"
-              onClick={() => {
-                /* Optional: local expand logic */
-              }}
-            >
-              +{node.children.length}
-            </div>
-          )}
         </div>
 
         {hasChildren && isExpanded && (
-          <div className="connector-container">
-            <svg className="vertical-connector-svg" width="2" height="40">
-              <line
-                x1="1"
-                y1="0"
-                x2="1"
-                y2="40"
-                stroke="#bfa77a"
-                strokeWidth="2"
+          <ul className="children-list">
+            {node.children.map((child) => (
+              <TreeNodeComponent
+                key={child.id}
+                node={child}
+                currentDepth={currentDepth + 1}
+                maxDepth={maxDepth}
               />
-            </svg>
-            <ul className="children-list">
-              {node.children.map((child) => (
-                <TreeNodeComponent
-                  key={child.id}
-                  node={child}
-                  currentDepth={currentDepth + 1}
-                  maxDepth={maxDepth}
-                />
-              ))}
-            </ul>
-          </div>
+            ))}
+          </ul>
         )}
       </div>
     </li>
   );
 }
-
 export default function Home() {
   const { people } = useLoaderData<typeof loader>();
   const roots = buildTree(people);

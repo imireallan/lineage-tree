@@ -297,3 +297,196 @@
   background: #fdf5e6;
   transform: translateX(-50%) scale(1.1);
 }
+
+/* Ensure parents and the arrow stay aligned as a unit */
+.parents-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* The vertical arrow dropping from the center of the parents */
+.drop-line-container {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.vertical-svg {
+  overflow: visible;
+  z-index: 1;
+}
+
+/* Horizontal line for siblings */
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 2px solid #bfa77a; /* Connects all the sibling vertical lines */
+  border-radius: 10px; /* Museum-grade curved corners */
+  margin-top: -1px; /* Align perfectly with the drop line */
+}
+
+/* Vertical line above each specific child */
+.tree-node-li {
+  position: relative;
+  padding-top: 20px;
+}
+
+.tree-node-li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: #bfa77a;
+  transform: translateX(-50%);
+}
+
+/* Container for the parents unit to center the arrow underneath them */
+.parents-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.parents-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  z-index: 2;
+}
+
+/* The vertical arrow drop */
+.drop-line-container {
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Spans full width of parents to find center */
+}
+
+/* The horizontal bar connecting siblings */
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 2px solid #bfa77a;
+  border-radius: 12px;
+  margin-top: -1px; /* Overlap with vertical SVG for seamless look */
+}
+
+/* Vertical entry line for each individual child */
+.tree-node-li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 25px;
+  background: #bfa77a;
+  transform: translateX(-50%);
+}
+
+/* Avatar styling to show initials */
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  margin: 0 auto 8px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+/* Container for the primary parent and their vertical line */
+.primary-parent-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* This anchors the line exactly to the center of Gwadenzwa's card */
+.vertical-line-anchor {
+  position: absolute;
+  top: 100%; /* Starts at the bottom of the card */
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+
+.family-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This keeps the children centered under the parent group */
+}
+
+.parents-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px; /* Space for the 40px vertical line */
+}
+
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 2px solid #bfa77a;
+  border-radius: 15px;
+  position: relative;
+}
+
+/* Individual child vertical entry line */
+.tree-node-li {
+  position: relative;
+  padding: 20px 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tree-node-li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: #bfa77a;
+  transform: translateX(-50%);
+}
+
+/* Clean up horizontal lines for edges */
+.tree-node-li:first-child::after,
+.tree-node-li:last-child::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 50%;
+  height: 2px;
+  background: #050505; /* Your background color */
+}
+.tree-node-li:first-child::after {
+  left: 0;
+}
+.tree-node-li:last-child::after {
+  right: 0;
+}
