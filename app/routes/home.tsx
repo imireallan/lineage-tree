@@ -88,19 +88,27 @@ function PersonCard({ person }: { person: Person }) {
   };
 
   // 2. High-contrast Initials
-  const initials = person.name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase();
+  // const initials = person.name
+  //   .split(" ")
+  //   .map((n) => n[0])
+  //   .join("")
+  //   .toUpperCase();
+
+  // 3. Determine gender class for CSS color coding
+  // Fallback to "unknown-gender" if the field is missing
+  const genderClass = person.gender
+    ? person.gender.toLowerCase()
+    : "unknown-gender";
 
   return (
-    <div className="person-card">
+    <div className={`person-card ${genderClass}`}>
       <div className="avatar">
-        <span>{initials}</span>
+        {/* <span>{initials}</span> */}
       </div>
-      <h3>{person.name}</h3>
-      <p className="dates">{getLifespan()}</p>
+      <div className="card-info">
+        <h3>{person.name}</h3>
+        <p className="dates">{getLifespan()}</p>
+      </div>
     </div>
   );
 }
