@@ -149,3 +149,126 @@
   background: #e0e0e0;
   color: #424242;
 }
+
+/* --- SVG Museum Styling --- */
+.svg-connector-container {
+  position: relative;
+  width: 100%;
+}
+
+.tree-svg {
+  display: block;
+  overflow: visible;
+  /* Soft gold/bronze color for a premium feel */
+  stroke: #bfa77a;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.3));
+}
+
+/* --- Disable Old Jagged CSS Lines --- */
+.tree-node-li::before,
+.tree-node-li::after,
+.parents-row::after {
+  display: none !important;
+}
+
+/* --- New Sibling Connector (Curved) --- */
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  border-top: 2px solid #bfa77a; /* Horizontal bar */
+  border-radius: 12px; /* Smooths the "corners" of the branch */
+  margin-top: -2px;
+}
+
+/* Vertical line above each child using a smooth curve */
+.tree-node-li {
+  padding-top: 25px;
+}
+
+.tree-node-li::before {
+  display: block !important; /* Re-enable for vertical entry */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 25px;
+  background: #bfa77a;
+}
+
+/* Container for the SVG and the children list */
+.connector-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: -20px; /* Pulls it up to touch the parents-row */
+}
+
+/* The vertical drop line from parents to sibling bar */
+.vertical-connector-svg {
+  display: block;
+  z-index: 1;
+}
+
+/* Horizontal Sibling Bar */
+.children-list {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 2px solid #bfa77a; /* The Museum Gold color */
+  border-radius: 12px; /* Smooth corners for the branch */
+  margin-top: -1px; /* Seamless connection with the vertical SVG */
+}
+
+/* Individual Child entry line */
+.tree-node-li {
+  position: relative;
+  padding: 25px 10px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Vertical line above each child */
+.tree-node-li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 25px;
+  background: #bfa77a;
+  transform: translateX(-50%);
+}
+
+/* Clean up horizontal lines on edges */
+.tree-node-li:first-child::after,
+.tree-node-li:last-child::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  width: 50%;
+  height: 2px;
+  background: #050505; /* Match your background color */
+}
+
+.tree-node-li:first-child::after {
+  left: 0;
+}
+.tree-node-li:last-child::after {
+  right: 0;
+}
+
+/* Exception for only children: remove horizontal artifacts */
+.tree-node-li:only-child::after {
+  display: none;
+}

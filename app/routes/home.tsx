@@ -102,9 +102,7 @@ function PersonCard({ person }: { person: Person }) {
 
   return (
     <div className={`person-card ${genderClass}`}>
-      <div className="avatar">
-        {/* <span>{initials}</span> */}
-      </div>
+      <div className="avatar">{/* <span>{initials}</span> */}</div>
       <div className="card-info">
         <h3>{person.name}</h3>
         <p className="dates">{getLifespan()}</p>
@@ -114,10 +112,12 @@ function PersonCard({ person }: { person: Person }) {
 }
 
 function TreeNodeComponent({ node }: { node: TreeNode }) {
+  const hasChildren = node.children && node.children.length > 0;
+
   return (
     <li className="tree-node-li">
       <div className="family-group">
-        {/* THE PARENTS ROW: Grouped together horizontally */}
+        {/* THE PARENTS ROW */}
         <div className="parents-row">
           <PersonCard person={node} />
           {node.spouses.map((spouse) => (
@@ -128,13 +128,25 @@ function TreeNodeComponent({ node }: { node: TreeNode }) {
           ))}
         </div>
 
-        {/* THE CHILDREN ROW: Only render once per family unit */}
-        {node.children && node.children.length > 0 && (
-          <ul className="children-list">
-            {node.children.map((child) => (
-              <TreeNodeComponent key={child.id} node={child} />
-            ))}
-          </ul>
+        {/* FIX: The Vertical Connector SVG */}
+        {hasChildren && (
+          <div className="connector-container">
+            <svg className="vertical-connector-svg" width="2" height="40">
+              <line
+                x1="1"
+                y1="0"
+                x2="1"
+                y2="40"
+                stroke="#bfa77a"
+                strokeWidth="2"
+              />
+            </svg>
+            <ul className="children-list">
+              {node.children.map((child) => (
+                <TreeNodeComponent key={child.id} node={child} />
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </li>
