@@ -111,13 +111,21 @@ function PersonCard({ person }: { person: Person }) {
   );
 }
 
-function TreeNodeComponent({ node }: { node: TreeNode }) {
+function TreeNodeComponent({
+  node,
+  currentDepth,
+  maxDepth,
+}: {
+  node: TreeNode;
+  currentDepth: number;
+  maxDepth: number;
+}) {
   const hasChildren = node.children && node.children.length > 0;
+  const isExpanded = currentDepth < maxDepth;
 
   return (
     <li className="tree-node-li">
       <div className="family-group">
-        {/* THE PARENTS ROW */}
         <div className="parents-row">
           <PersonCard person={node} />
           {node.spouses.map((spouse) => (
@@ -126,10 +134,21 @@ function TreeNodeComponent({ node }: { node: TreeNode }) {
               <PersonCard person={spouse} />
             </React.Fragment>
           ))}
+
+          {/* Visual indicator that more children exist but are hidden */}
+          {hasChildren && !isExpanded && (
+            <div
+              className="expand-indicator"
+              onClick={() => {
+                /* Optional: local expand logic */
+              }}
+            >
+              +{node.children.length}
+            </div>
+          )}
         </div>
 
-        {/* FIX: The Vertical Connector SVG */}
-        {hasChildren && (
+        {hasChildren && isExpanded && (
           <div className="connector-container">
             <svg className="vertical-connector-svg" width="2" height="40">
               <line
@@ -143,7 +162,12 @@ function TreeNodeComponent({ node }: { node: TreeNode }) {
             </svg>
             <ul className="children-list">
               {node.children.map((child) => (
-                <TreeNodeComponent key={child.id} node={child} />
+                <TreeNodeComponent
+                  key={child.id}
+                  node={child}
+                  currentDepth={currentDepth + 1}
+                  maxDepth={maxDepth}
+                />
               ))}
             </ul>
           </div>
@@ -157,15 +181,27 @@ export default function Home() {
   const { people } = useLoaderData<typeof loader>();
   const roots = buildTree(people);
 
-  // Slider state: 1 is 100%, 0.5 is 50%
   const [zoom, setZoom] = useState(1);
+  // Default to showing 3 generations
+  const [maxDepth, setMaxDepth] = useState(3);
 
   return (
     <div className="lineage-page">
       <header className="lineage-header">
         <h1>THE IMIRE FAMILY LINEAGE</h1>
         <div className="controls">
-          <label>Zoom</label>
+          <label>Depth</label>
+          <input
+            type="range"
+            min="1"
+            max="6"
+            step="1"
+            value={maxDepth}
+            onChange={(e) => setMaxDepth(parseInt(e.target.value))}
+          />
+          <span>{maxDepth} Gen</span>
+
+          <label style={{ marginLeft: "20px" }}>Zoom</label>
           <input
             type="range"
             min="0.3"
@@ -174,7 +210,6 @@ export default function Home() {
             value={zoom}
             onChange={(e) => setZoom(parseFloat(e.target.value))}
           />
-          <span>{Math.round(zoom * 100)}%</span>
         </div>
       </header>
 
@@ -185,13 +220,16 @@ export default function Home() {
         >
           <ul className="root-level">
             {roots.map((root) => (
-              <TreeNodeComponent key={root.id} node={root} />
+              <TreeNodeComponent
+                key={root.id}
+                node={root}
+                currentDepth={1}
+                maxDepth={maxDepth}
+              />
             ))}
           </ul>
         </div>
       </div>
-
-      <footer className="lineage-footer">© 2026 Family Archives</footer>
     </div>
   );
 }

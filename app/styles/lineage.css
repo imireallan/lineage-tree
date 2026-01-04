@@ -272,3 +272,28 @@
 .tree-node-li:only-child::after {
   display: none;
 }
+
+.expand-indicator {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #bfa77a;
+  color: #050505;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  border: 2px solid #050505;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.expand-indicator:hover {
+  background: #fdf5e6;
+  transform: translateX(-50%) scale(1.1);
+}
