@@ -1,252 +1,271 @@
-/* --- Tree Viewport & Container --- */
+/* --- Theme Variables --- */
+.dark-theme {
+  --bg-page: #0a0a0a;
+  --bg-viewport: #050505;
+  --bg-card: #1a1a1a;
+  --text-main: #e0e0e0;
+  --text-card: #ffffff;
+  --accent: #bfa77a; /* Gold */
+  --border-card: #333;
+  --heart: #e53e3e;
+}
+
+.light-theme {
+  --bg-page: #f4ece0; /* Parchment */
+  --bg-viewport: #fdfaf5;
+  --bg-card: #fffcf5;
+  --text-main: #3b2f2f;
+  --text-card: #2d2424;
+  --accent: #8c6d46; /* Bronze/Sepia */
+  --border-card: #dcd1ba;
+  --heart: #c53030;
+}
+
+/* --- Core Layout & Viewport --- */
+.lineage-page {
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  transition: background-color 0.4s ease;
+}
+
 .tree-viewport {
   flex: 1;
   overflow: auto;
-  padding: 80px;
-  background-color: #050505;
+  padding: 80px 40px;
+  background-color: var(--bg-viewport);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: safe center;
 }
 
 .tree-container {
-  display: inline-block;
+  display: flex;
+  justify-content: safe center;
   min-width: 100%;
+  margin: 0 auto;
+  transform-origin: top center;
+  transition: transform 0.3s ease-out;
 }
 
 .root-level {
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
-/* --- Node Logic --- */
-.tree-node-li {
+/* --- Header & Controls --- */
+.lineage-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
-  padding: 20px 10px 0 10px;
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border-card);
+  background: var(--bg-page);
+  z-index: 100;
 }
 
-/* Horizontal line connecting siblings */
-.tree-node-li::before,
-.tree-node-li::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 50%;
-  border-top: 2px solid #3b2f2f;
-  width: 50%;
-  height: 20px;
+.lineage-header h1 {
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
-.tree-node-li::after {
-  right: auto;
-  left: 50%;
-  border-left: 2px solid #3b2f2f;
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
-/* Remove side lines for single children or edge siblings */
-.tree-node-li:only-child::after,
-.tree-node-li:only-child::before {
-  display: none;
-}
-.tree-node-li:only-child {
-  padding-top: 20px;
-}
-.tree-node-li:only-child::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  height: 20px;
-  border-left: 2px solid #3b2f2f;
-  display: block !important;
-}
-.tree-node-li:first-child::before,
-.tree-node-li:last-child::after {
+.theme-toggle {
+  background: var(--accent);
+  color: var(--bg-page);
   border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: transform 0.2s;
 }
 
-/* --- Parents Row --- */
+.theme-toggle:hover {
+  transform: scale(1.05);
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid var(--accent);
+}
+
+.control-group span {
+  font-weight: bold;
+  color: var(--accent);
+  min-width: 85px;
+  font-family: "Courier New", monospace;
+}
+
+.stats-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(191, 167, 122, 0.1);
+  padding: 5px 20px;
+  border-radius: 15px;
+  border: 1px dashed var(--accent);
+}
+
+.stats-count {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* --- Person Cards --- */
+.person-card {
+  position: relative;
+  width: 150px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-card);
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  color: var(--text-card);
+}
+
+.person-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(191, 167, 122, 0.3);
+  z-index: 20;
+}
+
+.person-card.male {
+  border-top: 4px solid #3182ce;
+}
+.person-card.female {
+  border-top: 4px solid #d53f8c;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: rgba(128, 128, 128, 0.2);
+  border-radius: 50%;
+  margin: 0 auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.card-info h3 {
+  font-size: 13px;
+  margin: 5px 0;
+  color: var(--text-card);
+}
+.dates {
+  font-size: 11px;
+  color: #718096;
+  margin: 0;
+}
+.age-label {
+  font-size: 10px;
+  color: var(--accent);
+  font-weight: bold;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.parent-tag {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--bg-page);
+  padding: 2px 10px;
+  font-size: 9px;
+  font-weight: 900;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+/* --- Connectors --- */
+.family-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .parents-row {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
   position: relative;
-  z-index: 2;
-  margin-bottom: 20px;
-}
-
-/* Vertical line dropping from parents to children list */
-.parents-row::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  width: 0;
-  height: 20px;
-  border-left: 2px solid #3b2f2f;
-}
-
-/* --- Children List --- */
-.children-list {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  padding-top: 20px;
-  position: relative;
-}
-
-/* --- Cards --- */
-.person-card {
-  width: 140px;
-  background: #fdf5e6;
-  border: 1.5px solid #bfa77a;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  color: #1a1a1a;
+  margin-bottom: 40px;
 }
 
 .marriage-heart {
+  color: var(--heart);
   font-size: 14px;
-  color: #e25555;
 }
 
-/* --- Gender Color Coding --- */
-
-/* MALE: Soft Blue theme */
-.person-card.male {
-  background: #e3f2fd;
-  border: 1.5px solid #2196f3;
-}
-.person-card.male .avatar {
-  background: #bbdefb;
-  color: #0d47a1;
-}
-
-/* FEMALE: Soft Rose theme */
-.person-card.female {
-  background: #fce4ec;
-  border: 1.5px solid #f06292;
-}
-.person-card.female .avatar {
-  background: #f8bbd0;
-  color: #880e4f;
-}
-
-/* UNKNOWN/OTHER: Neutral theme */
-.person-card.unknown-gender {
-  background: #f5f5f5;
-  border: 1.5px solid #9e9e9e;
-}
-.person-card.unknown-gender .avatar {
-  background: #e0e0e0;
-  color: #424242;
-}
-
-/* --- SVG Museum Styling --- */
-.svg-connector-container {
-  position: relative;
-  width: 100%;
-}
-
-.tree-svg {
-  display: block;
-  overflow: visible;
-  /* Soft gold/bronze color for a premium feel */
-  stroke: #bfa77a;
-  stroke-width: 2px;
-  stroke-linecap: round;
-  filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.3));
-}
-
-/* --- Disable Old Jagged CSS Lines --- */
-.tree-node-li::before,
-.tree-node-li::after,
-.parents-row::after {
-  display: none !important;
-}
-
-/* --- New Sibling Connector (Curved) --- */
 .children-list {
   display: flex;
-  justify-content: center;
+  justify-content: safe center;
   list-style: none;
   padding: 0;
   margin: 0;
+  border-top: 2px solid var(--accent);
+  border-radius: 15px;
   position: relative;
-  border-top: 2px solid #bfa77a; /* Horizontal bar */
-  border-radius: 12px; /* Smooths the "corners" of the branch */
-  margin-top: -2px;
 }
 
-/* Vertical line above each child using a smooth curve */
-.tree-node-li {
-  padding-top: 25px;
-}
-
-.tree-node-li::before {
-  display: block !important; /* Re-enable for vertical entry */
+.children-list::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -40px;
   left: 50%;
   width: 2px;
-  height: 25px;
-  background: #bfa77a;
+  height: 40px;
+  background: var(--accent);
 }
 
-/* Container for the SVG and the children list */
-.connector-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  margin-top: -20px; /* Pulls it up to touch the parents-row */
-}
-
-/* The vertical drop line from parents to sibling bar */
-.vertical-connector-svg {
-  display: block;
-  z-index: 1;
-}
-
-/* Horizontal Sibling Bar */
-.children-list {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 2px solid #bfa77a; /* The Museum Gold color */
-  border-radius: 12px; /* Smooth corners for the branch */
-  margin-top: -1px; /* Seamless connection with the vertical SVG */
-}
-
-/* Individual Child entry line */
 .tree-node-li {
   position: relative;
-  padding: 25px 10px 0 10px;
+  padding: 20px 10px 0 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Vertical line above each child */
 .tree-node-li::before {
   content: "";
   position: absolute;
   top: 0;
   left: 50%;
   width: 2px;
-  height: 25px;
-  background: #bfa77a;
+  height: 20px;
+  background: var(--accent);
   transform: translateX(-50%);
 }
 
@@ -258,7 +277,7 @@
   top: -2px;
   width: 50%;
   height: 2px;
-  background: #050505; /* Match your background color */
+  background: var(--bg-viewport); /* Hides the excess horizontal bar */
 }
 
 .tree-node-li:first-child::after {
@@ -267,408 +286,19 @@
 .tree-node-li:last-child::after {
   right: 0;
 }
-
-/* Exception for only children: remove horizontal artifacts */
 .tree-node-li:only-child::after {
   display: none;
 }
 
-.expand-indicator {
-  position: absolute;
-  bottom: -15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #bfa77a;
-  color: #050505;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: bold;
-  border: 2px solid #050505;
-  cursor: pointer;
-  z-index: 10;
+/* Custom Scrollbar */
+.tree-viewport::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
 }
-
-.expand-indicator:hover {
-  background: #fdf5e6;
-  transform: translateX(-50%) scale(1.1);
+.tree-viewport::-webkit-scrollbar-track {
+  background: var(--bg-page);
 }
-
-/* Ensure parents and the arrow stay aligned as a unit */
-.parents-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-}
-
-/* The vertical arrow dropping from the center of the parents */
-.drop-line-container {
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.vertical-svg {
-  overflow: visible;
-  z-index: 1;
-}
-
-/* Horizontal line for siblings */
-.children-list {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 2px solid #bfa77a; /* Connects all the sibling vertical lines */
-  border-radius: 10px; /* Museum-grade curved corners */
-  margin-top: -1px; /* Align perfectly with the drop line */
-}
-
-/* Vertical line above each specific child */
-.tree-node-li {
-  position: relative;
-  padding-top: 20px;
-}
-
-.tree-node-li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 20px;
-  background: #bfa77a;
-  transform: translateX(-50%);
-}
-
-/* Container for the parents unit to center the arrow underneath them */
-.parents-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  width: fit-content;
-  margin: 0 auto;
-}
-
-.parents-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  z-index: 2;
-}
-
-/* The vertical arrow drop */
-.drop-line-container {
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  width: 100%; /* Spans full width of parents to find center */
-}
-
-/* The horizontal bar connecting siblings */
-.children-list {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 2px solid #bfa77a;
-  border-radius: 12px;
-  margin-top: -1px; /* Overlap with vertical SVG for seamless look */
-}
-
-/* Vertical entry line for each individual child */
-.tree-node-li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 25px;
-  background: #bfa77a;
-  transform: translateX(-50%);
-}
-
-/* Avatar styling to show initials */
-.avatar {
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
-  margin: 0 auto 8px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-}
-/* Container for the primary parent and their vertical line */
-.primary-parent-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* This anchors the line exactly to the center of Gwadenzwa's card */
-.vertical-line-anchor {
-  position: absolute;
-  top: 100%; /* Starts at the bottom of the card */
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  z-index: 1;
-}
-
-.family-group {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* This keeps the children centered under the parent group */
-}
-
-.parents-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px; /* Space for the 40px vertical line */
-}
-
-.children-list {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-top: 2px solid #bfa77a;
-  border-radius: 15px;
-  position: relative;
-}
-
-/* Individual child vertical entry line */
-.tree-node-li {
-  position: relative;
-  padding: 20px 10px 0 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tree-node-li::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 20px;
-  background: #bfa77a;
-  transform: translateX(-50%);
-}
-
-/* Clean up horizontal lines for edges */
-.tree-node-li:first-child::after,
-.tree-node-li:last-child::after {
-  content: "";
-  position: absolute;
-  top: -2px;
-  width: 50%;
-  height: 2px;
-  background: #050505; /* Your background color */
-}
-.tree-node-li:first-child::after {
-  left: 0;
-}
-.tree-node-li:last-child::after {
-  right: 0;
-}
-
-.age-label {
-  font-size: 11px;
-  font-weight: 600;
-  margin-top: 4px;
-  color: #555;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* Subtle distinction for deceased vs living */
-.person-card.male .age-label {
-  color: #0d47a1;
-}
-.person-card.female .age-label {
-  color: #880e4f;
-}
-
-/* Core Layout */
-.lineage-page {
-  background-color: #0a0a0a;
-  color: #e0e0e0;
-  min-height: 100vh;
-  padding: 20px;
-  font-family: "Inter", sans-serif;
-}
-
-.lineage-header {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.lineage-header h1 {
-  font-size: 2rem;
-  letter-spacing: 4px;
-  color: #bfa77a;
-  text-transform: uppercase;
-}
-
-/* Person Card Styling */
-.person-card {
-  position: relative;
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
-  padding: 15px;
-  width: 190px;
-  text-align: center;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
-  margin: 10px;
-}
-
-/* FIX: Specific border colors for gender */
-.person-card.male {
-  border-top: 4px solid #3182ce;
-}
-.person-card.female {
-  border-top: 4px solid #d53f8c;
-}
-
-/* FIX: Improved Parent Tag positioning */
-.parent-tag {
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #bfa77a;
-  color: #000;
-  padding: 2px 10px;
-  font-size: 10px;
-  font-weight: bold;
-  border-radius: 4px;
-  white-space: nowrap;
-  z-index: 10;
-}
-
-.age-label {
-  font-size: 11px;
-  color: #bfa77a;
-  font-weight: bold;
-  margin-top: 5px;
-}
-
-/* Tree Structure */
-.children-list {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  padding-top: 40px;
-  position: relative;
-}
-
-.children-list::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 40px;
-  background: #444;
-}
-
-.lineage-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px 0;
-  border-bottom: 1px solid #333;
-  margin-bottom: 50px;
-}
-
-.control-group {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  background: #111;
-  padding: 10px 20px;
-  border-radius: 30px;
-  border: 1px solid #bfa77a;
-}
-
-.control-group span {
-  font-weight: bold;
-  color: #bfa77a;
-  min-width: 85px;
-}
-
-.parent-tag {
-  position: absolute;
-  top: -20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #bfa77a;
-  color: #000;
-  font-size: 9px;
-  font-weight: 900;
-  text-transform: uppercase;
-  padding: 2px 8px;
-  border-radius: 2px;
-  white-space: nowrap;
-}
-
-/* Person Card Hover Effect */
-.person-card:hover {
-  border-color: #bfa77a;
-  box-shadow: 0 0 15px rgba(191, 167, 122, 0.3);
-  z-index: 20;
-}
-
-/* Stats Badge Styling */
-.stats-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px; /* Places it below the sliders */
-  background: rgba(191, 167, 122, 0.1); /* Subtle gold tint */
-  padding: 5px 20px;
-  border-radius: 15px;
-  border: 1px dashed #bfa77a;
-}
-
-.stats-label {
-  font-size: 11px;
-  letter-spacing: 1px;
-  color: #a0aec0;
-  font-weight: 600;
-}
-
-.stats-count {
-  font-size: 16px;
-  font-weight: 800;
-  color: #bfa77a;
-  font-family: "Courier New", monospace;
-}
-
-/* Ensure controls stack nicely */
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
+.tree-viewport::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 5px;
 }

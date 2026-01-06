@@ -105,7 +105,7 @@ function PersonCard({ person }: { person: any }) {
     <div className={`person-card ${person.gender?.toLowerCase() || "unknown"}`}>
       {person.parent && (
         <div className="parent-tag">
-          {kinshipLabel} {person.parent.name}
+          {kinshipLabel} {person.parent.name.split(" ")[0]}
         </div>
       )}
       <div className="avatar">
@@ -172,10 +172,13 @@ export default function Home() {
   const { allPeople } = useLoaderData<typeof loader>();
   const treeRoot = useMemo(() => buildTree(allPeople), [allPeople]);
 
-  // Calculate total number of people in the database
+  const [zoom, setZoom] = useState(0.6);
+  const [maxDepth, setMaxDepth] = useState(1);
+  // NEW: Theme State
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
   const totalPeople = allPeople?.length || 0;
 
-  // Dynamic Depth Calculation
   const actualMaxDepth = useMemo(() => {
     const getDepth = (node: any): number => {
       if (!node.children || node.children.length === 0) return 1;
@@ -186,17 +189,23 @@ export default function Home() {
     return treeRoot ? getDepth(treeRoot) : 1;
   }, [treeRoot]);
 
-  const [zoom, setZoom] = useState(0.6);
-  const [maxDepth, setMaxDepth] = useState(1);
-
-  if (!treeRoot)
-    return <div className="loading-screen">No Data Found. Check Seed.</div>;
+  if (!treeRoot) return <div className="loading-screen">No Data Found.</div>;
 
   return (
-    <div className="lineage-page">
+    // Dynamic class based on theme state
+    <div className={`lineage-page ${theme}-theme`}>
       <header className="lineage-header">
         <h1>THE IMIRE FAMILY LINEAGE</h1>
+
         <div className="controls">
+          {/* NEW: Theme Toggle Button */}
+          <button
+            className="theme-toggle"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? "📜 Light Parchment" : "🏛️ Dark Museum"}
+          </button>
+
           <div className="control-group">
             <label>Depth</label>
             <input
@@ -224,7 +233,6 @@ export default function Home() {
             <span>{Math.round(zoom * 100)}%</span>
           </div>
 
-          {/* NEW: Total People Counter */}
           <div className="stats-badge">
             <span className="stats-label">TOTAL MEMBERS:</span>
             <span className="stats-count">{totalPeople}</span>
@@ -233,10 +241,7 @@ export default function Home() {
       </header>
 
       <div className="tree-viewport">
-        <div
-          className="tree-container"
-          style={{ transform: `scale(${zoom})`, transformOrigin: "top center" }}
-        >
+        <div className="tree-container" style={{ transform: `scale(${zoom})` }}>
           <ul className="root-level">
             <TreeNodeComponent
               node={treeRoot}
