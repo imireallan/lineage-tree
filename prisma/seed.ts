@@ -108,19 +108,19 @@ async function main() {
     },
   });
 
-  // const robai = await prisma.person.create({
-  //   data: {
-  //     name: "Robai Guridala",
-  //     gender: "female",
-  //   },
-  // });
+  const robai = await prisma.person.create({
+    data: {
+      name: "Robai Guridala",
+      gender: "female",
+    },
+  });
   const lenah = await prisma.person.create({
     data: {
       name: "Lenah Gimase",
       gender: "female",
       birthDate: new Date("1907-08-15"),
       deathDate: new Date("2003-04-05"),
-      // parentId: robai.id,
+      parentId: robai.id,
     },
   });
 
@@ -190,6 +190,19 @@ async function main() {
   await prisma.marriage.create({
     data: { spouseAId: rodah.id, spouseBId: elias.id },
   });
+
+  await prisma.person.createMany({
+    data: [
+      { name: "Owinjo", gender: "male", parentId: rodah.id },
+      { name: "Florence Emonyangwa", gender: "female", parentId: rodah.id },
+      { name: "Imali", gender: "female", parentId: rodah.id },
+      { name: "Vijedi", gender: "female", parentId: rodah.id },
+      { name: "Kenneth Enonda", gender: "male", parentId: rodah.id },
+      { name: "Minayo", gender: "male", parentId: rodah.id },
+      { name: "Margaret", gender: "female", parentId: rodah.id },
+    ],
+  });
+
   const rachael = await prisma.person.create({
     data: {
       name: "Rachael Kedeki",
@@ -328,7 +341,7 @@ async function main() {
         deathDate: new Date("2018-02-25"),
       },
       {
-        name: "Herbert Kidiavadi",
+        name: "Herbert Kidiga",
         gender: "male",
         parentId: truphena.id,
         birthDate: new Date("1960-01-01"),

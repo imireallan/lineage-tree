@@ -507,3 +507,134 @@
 .person-card.female .age-label {
   color: #880e4f;
 }
+
+/* Core Layout */
+.lineage-page {
+  background-color: #0a0a0a;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: "Inter", sans-serif;
+}
+
+.lineage-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.lineage-header h1 {
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #bfa77a;
+  text-transform: uppercase;
+}
+
+/* Person Card Styling */
+.person-card {
+  position: relative;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  width: 190px;
+  text-align: center;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
+  margin: 10px;
+}
+
+/* FIX: Specific border colors for gender */
+.person-card.male {
+  border-top: 4px solid #3182ce;
+}
+.person-card.female {
+  border-top: 4px solid #d53f8c;
+}
+
+/* FIX: Improved Parent Tag positioning */
+.parent-tag {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #bfa77a;
+  color: #000;
+  padding: 2px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.age-label {
+  font-size: 11px;
+  color: #bfa77a;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Tree Structure */
+.children-list {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding-top: 40px;
+  position: relative;
+}
+
+.children-list::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 40px;
+  background: #444;
+}
+
+.lineage-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+  border-bottom: 1px solid #333;
+  margin-bottom: 50px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: #111;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: 1px solid #bfa77a;
+}
+
+.control-group span {
+  font-weight: bold;
+  color: #bfa77a;
+  min-width: 85px;
+}
+
+.parent-tag {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #bfa77a;
+  color: #000;
+  font-size: 9px;
+  font-weight: 900;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+/* Person Card Hover Effect */
+.person-card:hover {
+  border-color: #bfa77a;
+  box-shadow: 0 0 15px rgba(191, 167, 122, 0.3);
+  z-index: 20;
+}

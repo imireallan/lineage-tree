@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { useState } from "react";
 import { useLoaderData } from "react-router";
 import { prisma } from "~/db/db.server";
@@ -23,100 +23,105 @@ type TreeNode = Person & {
   spouses: Person[]; // Changed to an array to support polygamy
 };
 
-function buildTree(people: any[]): TreeNode[] {
-  const map = new Map<string, TreeNode>();
-  people.forEach((p) => map.set(p.id, { ...p, children: [], spouses: [] }));
-
-  const roots: TreeNode[] = [];
-  const secondarySpouses = new Set<string>();
-
-  map.forEach((node) => {
-    // Check both potential marriage arrays
-    const allMarriages = [
-      ...(node.marriagesAsA || []),
-      ...(node.marriagesAsB || []),
-    ];
-
-    allMarriages.forEach((m: any) => {
-      const partnerId = m.spouseAId === node.id ? m.spouseBId : m.spouseAId;
-      const partner = map.get(partnerId);
-
-      // Add partner to spouses array if not already processed
-      if (partner && !secondarySpouses.has(node.id)) {
-        node.spouses.push(partner);
-        secondarySpouses.add(partnerId);
-      }
-    });
+/**
+ * LOADER
+ * Fetches all people in a flat list with marriages and parents included.
+ */
+export async function loader() {
+  const allPeople = await prisma.person.findMany({
+    include: {
+      parent: true,
+      marriagesAsA: { include: { spouseB: { include: { parent: true } } } },
+      marriagesAsB: { include: { spouseA: { include: { parent: true } } } },
+    },
   });
 
-  map.forEach((node) => {
-    if (node.parentId && map.has(node.parentId)) {
-      map.get(node.parentId)?.children.push(node);
-    } else if (!secondarySpouses.has(node.id)) {
-      roots.push(node);
+  return { allPeople };
+}
+
+/**
+ * TREE BUILDER HELPER
+ * Converts flat DB data into a nested JSON structure for the UI.
+ */
+function buildTree(allPeople: any[]) {
+  if (!allPeople || !Array.isArray(allPeople)) return null;
+
+  const map = new Map();
+
+  // 1. Initialize map and normalize marriages
+  allPeople.forEach((person) => {
+    const spouses = [
+      ...(person.marriagesAsA?.map((m: any) => ({
+        ...m.spouseB,
+        parent: m.spouseB.parent,
+      })) || []),
+      ...(person.marriagesAsB?.map((m: any) => ({
+        ...m.spouseA,
+        parent: m.spouseA.parent,
+      })) || []),
+    ];
+    map.set(person.id, { ...person, spouses, children: [] });
+  });
+
+  let root = null;
+
+  // 2. Build relationships
+  allPeople.forEach((person) => {
+    const node = map.get(person.id);
+    if (person.parentId && map.has(person.parentId)) {
+      map.get(person.parentId).children.push(node);
+    } else if (person.name === "Lovoga") {
+      root = node;
     }
   });
 
-  return roots;
+  return root;
 }
 
-export async function loader() {
-  const people = await prisma.person.findMany({
-    include: {
-      marriagesAsA: true, // Fetch marriages where they are spouse A
-      marriagesAsB: true, // Fetch marriages where they are spouse B
-    },
-    orderBy: { createdAt: "asc" },
-  });
-  return Response.json({ people });
-}
-
-function PersonCard({ person }: { person: Person }) {
+/**
+ * PERSON CARD COMPONENT
+ * Renders individual nodes with Son/Daughter logic and age calculations.
+ */
+function PersonCard({ person }: { person: any }) {
   const calculateAge = () => {
     if (!person.birthDate) return null;
-
     const birth = new Date(person.birthDate);
     const end = person.deathDate ? new Date(person.deathDate) : new Date();
-
     let age = end.getFullYear() - birth.getFullYear();
-    const monthDiff = end.getMonth() - birth.getMonth();
-
-    // Adjust if the birthday hasn't occurred yet in the final year
-    if (monthDiff < 0 || (monthDiff === 0 && end.getDate() < birth.getDate())) {
-      age--;
-    }
-
+    const m = end.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && end.getDate() < birth.getDate())) age--;
     return age;
-  };
-
-  const getLifespan = () => {
-    if (!person.birthDate) return "Dates Unknown";
-    const birthYear = new Date(person.birthDate).getFullYear();
-    if (person.deathDate) {
-      return `${birthYear} — ${new Date(person.deathDate).getFullYear()}`;
-    }
-    return `${birthYear} — Present`;
   };
 
   const age = calculateAge();
   const initials = person.name
     .split(" ")
-    .map((n) => n[0])
+    .map((n: string) => n[0])
     .join("")
     .toUpperCase();
-  const genderClass = person.gender
-    ? person.gender.toLowerCase()
-    : "unknown-gender";
+  const kinshipLabel = person.gender === "female" ? "Daughter of" : "Son of";
 
   return (
-    <div className={`person-card ${genderClass}`}>
+    <div className={`person-card ${person.gender?.toLowerCase() || "unknown"}`}>
+      {person.parent && (
+        <div className="parent-tag">
+          {kinshipLabel} {person.parent.name}
+        </div>
+      )}
       <div className="avatar">
         <span>{initials}</span>
       </div>
       <div className="card-info">
         <h3>{person.name}</h3>
-        <p className="dates">{getLifespan()}</p>
-        {/* Display Age */}
+        <p className="dates">
+          {person.birthDate ? new Date(person.birthDate).getFullYear() : "???"}{" "}
+          —{" "}
+          {person.deathDate
+            ? new Date(person.deathDate).getFullYear()
+            : person.birthDate
+              ? "Present"
+              : "???"}
+        </p>
         {age !== null && (
           <p className="age-label">
             {person.deathDate ? `Died at ${age}` : `Age: ${age}`}
@@ -127,15 +132,10 @@ function PersonCard({ person }: { person: Person }) {
   );
 }
 
-function TreeNodeComponent({
-  node,
-  currentDepth,
-  maxDepth,
-}: {
-  node: TreeNode;
-  currentDepth: number;
-  maxDepth: number;
-}) {
+/**
+ * RECURSIVE TREE NODE
+ */
+function TreeNodeComponent({ node, currentDepth, maxDepth }: any) {
   const hasChildren = node.children && node.children.length > 0;
   const isExpanded = currentDepth < maxDepth;
 
@@ -143,39 +143,17 @@ function TreeNodeComponent({
     <li className="tree-node-li">
       <div className="family-group">
         <div className="parents-row">
-          {/* ANCHOR: The primary parent (e.g., Gwadenzwa) */}
-          <div className="primary-parent-container">
-            <PersonCard person={node} />
-
-            {/* The vertical connector now lives INSIDE this container */}
-            {hasChildren && isExpanded && (
-              <div className="vertical-line-anchor">
-                <svg width="2" height="40">
-                  <line
-                    x1="1"
-                    y1="0"
-                    x2="1"
-                    y2="40"
-                    stroke="#bfa77a"
-                    strokeWidth="2"
-                  />
-                </svg>
-              </div>
-            )}
-          </div>
-
-          {/* The Spouses flow to the right */}
-          {node.spouses.map((spouse) => (
+          <PersonCard person={node} />
+          {node.spouses.map((spouse: any) => (
             <React.Fragment key={spouse.id}>
               <div className="marriage-heart">❤️</div>
               <PersonCard person={spouse} />
             </React.Fragment>
           ))}
         </div>
-
         {hasChildren && isExpanded && (
           <ul className="children-list">
-            {node.children.map((child) => (
+            {node.children.map((child: any) => (
               <TreeNodeComponent
                 key={child.id}
                 node={child}
@@ -189,56 +167,88 @@ function TreeNodeComponent({
     </li>
   );
 }
-export default function Home() {
-  const { people } = useLoaderData<typeof loader>();
-  const roots = buildTree(people);
 
-  const [zoom, setZoom] = useState(1);
-  // Default to showing 3 generations
-  const [maxDepth, setMaxDepth] = useState(3);
+/**
+ * MAIN HOME COMPONENT
+ */
+export default function Home() {
+  const { allPeople } = useLoaderData<typeof loader>();
+  const treeRoot = useMemo(() => buildTree(allPeople), [allPeople]);
+
+  // DYNAMIC DEPTH CALCULATION
+  const actualMaxDepth = useMemo(() => {
+    const getDepth = (node: any): number => {
+      if (!node.children || node.children.length === 0) return 1;
+      return (
+        1 + Math.max(...node.children.map((child: any) => getDepth(child)))
+      );
+    };
+    return treeRoot ? getDepth(treeRoot) : 1;
+  }, [treeRoot]);
+
+  // SET DEFAULTS HERE: Zoom to 0.6 and Depth to 1
+  const [zoom, setZoom] = useState(0.6);
+  const [maxDepth, setMaxDepth] = useState(1);
+
+  // Remove the useEffect that forces maxDepth to actualMaxDepth
+  // so that it respects your default '1' on load.
+  /* useEffect(() => {
+    setMaxDepth(actualMaxDepth);
+  }, [actualMaxDepth]); 
+  */
+
+  if (!treeRoot)
+    return <div className="loading-screen">No Data Found. Check Seed.</div>;
 
   return (
     <div className="lineage-page">
       <header className="lineage-header">
         <h1>THE IMIRE FAMILY LINEAGE</h1>
         <div className="controls">
-          <label>Depth</label>
-          <input
-            type="range"
-            min="1"
-            max="6"
-            step="1"
-            value={maxDepth}
-            onChange={(e) => setMaxDepth(parseInt(e.target.value))}
-          />
-          <span>{maxDepth} Gen</span>
+          <div className="control-group">
+            <label>Depth</label>
+            <input
+              type="range"
+              min="1"
+              max={actualMaxDepth}
+              value={maxDepth}
+              onChange={(e) => setMaxDepth(parseInt(e.target.value))}
+            />
+            {/* Display current depth vs total available in the DB */}
+            <span>
+              {maxDepth} / {actualMaxDepth} Gen
+            </span>
+          </div>
 
-          <label style={{ marginLeft: "20px" }}>Zoom</label>
-          <input
-            type="range"
-            min="0.3"
-            max="1.5"
-            step="0.1"
-            value={zoom}
-            onChange={(e) => setZoom(parseFloat(e.target.value))}
-          />
+          <div className="control-group">
+            <label>Zoom</label>
+            <input
+              type="range"
+              min="0.2"
+              max="1.5"
+              step="0.1"
+              value={zoom}
+              onChange={(e) => setZoom(parseFloat(e.target.value))}
+            />
+            <span>{Math.round(zoom * 100)}%</span>
+          </div>
         </div>
       </header>
 
       <div className="tree-viewport">
         <div
           className="tree-container"
-          style={{ transform: `scale(${zoom})`, transformOrigin: "top center" }}
+          style={{
+            transform: `scale(${zoom})`,
+            transformOrigin: "top center",
+          }}
         >
           <ul className="root-level">
-            {roots.map((root) => (
-              <TreeNodeComponent
-                key={root.id}
-                node={root}
-                currentDepth={1}
-                maxDepth={maxDepth}
-              />
-            ))}
+            <TreeNodeComponent
+              node={treeRoot}
+              currentDepth={1}
+              maxDepth={maxDepth}
+            />
           </ul>
         </div>
       </div>
