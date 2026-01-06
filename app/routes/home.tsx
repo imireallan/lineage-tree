@@ -168,14 +168,14 @@ function TreeNodeComponent({ node, currentDepth, maxDepth }: any) {
   );
 }
 
-/**
- * MAIN HOME COMPONENT
- */
 export default function Home() {
   const { allPeople } = useLoaderData<typeof loader>();
   const treeRoot = useMemo(() => buildTree(allPeople), [allPeople]);
 
-  // DYNAMIC DEPTH CALCULATION
+  // Calculate total number of people in the database
+  const totalPeople = allPeople?.length || 0;
+
+  // Dynamic Depth Calculation
   const actualMaxDepth = useMemo(() => {
     const getDepth = (node: any): number => {
       if (!node.children || node.children.length === 0) return 1;
@@ -186,16 +186,8 @@ export default function Home() {
     return treeRoot ? getDepth(treeRoot) : 1;
   }, [treeRoot]);
 
-  // SET DEFAULTS HERE: Zoom to 0.6 and Depth to 1
   const [zoom, setZoom] = useState(0.6);
   const [maxDepth, setMaxDepth] = useState(1);
-
-  // Remove the useEffect that forces maxDepth to actualMaxDepth
-  // so that it respects your default '1' on load.
-  /* useEffect(() => {
-    setMaxDepth(actualMaxDepth);
-  }, [actualMaxDepth]); 
-  */
 
   if (!treeRoot)
     return <div className="loading-screen">No Data Found. Check Seed.</div>;
@@ -214,7 +206,6 @@ export default function Home() {
               value={maxDepth}
               onChange={(e) => setMaxDepth(parseInt(e.target.value))}
             />
-            {/* Display current depth vs total available in the DB */}
             <span>
               {maxDepth} / {actualMaxDepth} Gen
             </span>
@@ -232,16 +223,19 @@ export default function Home() {
             />
             <span>{Math.round(zoom * 100)}%</span>
           </div>
+
+          {/* NEW: Total People Counter */}
+          <div className="stats-badge">
+            <span className="stats-label">TOTAL MEMBERS:</span>
+            <span className="stats-count">{totalPeople}</span>
+          </div>
         </div>
       </header>
 
       <div className="tree-viewport">
         <div
           className="tree-container"
-          style={{
-            transform: `scale(${zoom})`,
-            transformOrigin: "top center",
-          }}
+          style={{ transform: `scale(${zoom})`, transformOrigin: "top center" }}
         >
           <ul className="root-level">
             <TreeNodeComponent

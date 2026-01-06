@@ -72,19 +72,100 @@ async function main() {
       parentId: gwadenzwa.id,
     },
   });
-  await prisma.person.create({
+  const siva = await prisma.person.create({
     data: {
       name: "Siva (Mom unknown)",
       gender: "male",
       parentId: gwadenzwa.id,
     },
   });
-  await prisma.person.create({
+
+  // Siva's wife
+  const mirehana = await prisma.person.create({
+    data: {
+      name: "Mirehana",
+      gender: "female",
+    },
+  });
+
+  await prisma.marriage.createMany({
+    data: [{ spouseAId: siva.id, spouseBId: mirehana.id }],
+  });
+
+  // Siva's children
+  await prisma.person.createMany({
+    data: [
+      { name: "Kavandara", gender: "female", parentId: siva.id },
+      { name: "Unknown", gender: "female", parentId: siva.id },
+    ],
+  });
+
+  const harun = await prisma.person.create({
     data: {
       name: "Harun Sugugu (Emonyangwa)",
       gender: "male",
       parentId: gwadenzwa.id,
     },
+  });
+  const dinah = await prisma.person.create({
+    data: {
+      name: "Dinah Kavuka",
+      gender: "female",
+    },
+  });
+
+  await prisma.marriage.createMany({
+    data: [{ spouseAId: harun.id, spouseBId: dinah.id }],
+  });
+
+  // Harun children
+  await prisma.person.createMany({
+    data: [
+      {
+        name: "Jamin Sarano",
+        gender: "male",
+        parentId: harun.id,
+        birthDate: new Date("1938-05-10"),
+      },
+      { name: "Peter", gender: "male", parentId: harun.id },
+      {
+        name: "Ezekiah",
+        gender: "female",
+        parentId: harun.id,
+        birthDate: new Date("1946-05-10"),
+        deathDate: new Date("1956-05-10"),
+      },
+      {
+        name: "Vuguza",
+        gender: "female",
+        parentId: harun.id,
+        birthDate: new Date("1948-05-10"),
+      },
+      {
+        name: "Abel Ebo Onzere",
+        gender: "male",
+        parentId: harun.id,
+        birthDate: new Date("1951-05-10"),
+      },
+      {
+        name: "Janet",
+        gender: "female",
+        parentId: harun.id,
+        birthDate: new Date("1953-05-10"),
+      },
+      {
+        name: "Phanis",
+        gender: "female",
+        parentId: harun.id,
+        birthDate: new Date("1955-05-10"),
+      },
+      {
+        name: "Jackson Lovoga",
+        gender: "male",
+        parentId: harun.id,
+        birthDate: new Date("1957-05-10"),
+      },
+    ],
   });
   await prisma.person.create({
     data: {
@@ -193,13 +274,57 @@ async function main() {
 
   await prisma.person.createMany({
     data: [
-      { name: "Owinjo", gender: "male", parentId: rodah.id },
-      { name: "Florence Emonyangwa", gender: "female", parentId: rodah.id },
-      { name: "Imali", gender: "female", parentId: rodah.id },
-      { name: "Vijedi", gender: "female", parentId: rodah.id },
-      { name: "Kenneth Enonda", gender: "male", parentId: rodah.id },
-      { name: "Minayo", gender: "male", parentId: rodah.id },
-      { name: "Margaret", gender: "female", parentId: rodah.id },
+      {
+        name: "Kidaha",
+        gender: "male",
+        parentId: rodah.id,
+        birthDate: new Date("1946-01-01"),
+        deathDate: new Date("1989-08-05"),
+      },
+      {
+        name: "Sayo",
+        gender: "female",
+        parentId: rodah.id,
+        birthDate: new Date("1949-01-01"),
+        deathDate: new Date("1994-08-05"),
+      },
+      {
+        name: "Phones",
+        gender: "female",
+        parentId: rodah.id,
+        birthDate: new Date("1957-01-01"),
+      },
+      {
+        name: "Zacheri Mzee",
+        gender: "male",
+        parentId: rodah.id,
+        birthDate: new Date("1959-01-01"),
+      },
+      {
+        name: "Aggrey Mugami Owinjo",
+        gender: "male",
+        parentId: rodah.id,
+        birthDate: new Date("1960-01-01"),
+        deathDate: new Date("2022-08-05"),
+      },
+      {
+        name: "Rose",
+        gender: "female",
+        parentId: rodah.id,
+        birthDate: new Date("1963-01-01"),
+      },
+      {
+        name: "Margaret",
+        gender: "female",
+        parentId: rodah.id,
+        birthDate: new Date("1973-01-01"),
+      },
+      {
+        name: "Mudavi",
+        gender: "male",
+        parentId: rodah.id,
+        birthDate: new Date("1976-01-01"),
+      },
     ],
   });
 
@@ -500,22 +625,96 @@ async function main() {
   await prisma.marriage.create({
     data: { spouseAId: laban.id, spouseBId: jesica.id },
   });
+  const helen = await prisma.person.create({
+    data: {
+      name: "Helen Makungu",
+      gender: "female",
+      parentId: daniel.id,
+      birthDate: new Date("1952-01-01"),
+    },
+  });
+  const francis = await prisma.person.create({
+    data: {
+      name: "Francis Inganji",
+      gender: "male",
+      birthDate: new Date("1950-01-01"),
+    },
+  });
+
+  await prisma.person.createMany({
+    data: [
+      {
+        name: "Victoria Warona",
+        gender: "female",
+        parentId: helen.id,
+        birthDate: new Date("1981-01-01"),
+      },
+      {
+        name: "Victor Inganji",
+        gender: "male",
+        parentId: helen.id,
+        birthDate: new Date("1983-01-01"),
+      },
+      {
+        name: "Ann Gimase",
+        gender: "female",
+        parentId: helen.id,
+        birthDate: new Date("1987-01-01"),
+      },
+    ],
+  });
+
+  await prisma.marriage.create({
+    data: { spouseAId: helen.id, spouseBId: francis.id },
+  });
+  const erica = await prisma.person.create({
+    data: {
+      name: "Erica Kaluhi",
+      gender: "female",
+      parentId: daniel.id,
+      birthDate: new Date("1943-01-01"),
+    },
+  });
+  const mutongore = await prisma.person.create({
+    data: {
+      name: "Livingstone Mutongore",
+      gender: "male",
+      birthDate: new Date("1941-01-01"),
+      deathDate: new Date("2021-01-01"),
+    },
+  });
+
+  await prisma.person.createMany({
+    data: [
+      {
+        name: "Irene Kenda",
+        gender: "female",
+        parentId: erica.id,
+        birthDate: new Date("1960-01-01"),
+        deathDate: new Date("2023-01-01"),
+      },
+      {
+        name: "Joyce Iminza",
+        gender: "female",
+        parentId: erica.id,
+        birthDate: new Date("1967-01-01"),
+      },
+      {
+        name: "Arnold Bahati",
+        gender: "male",
+        parentId: erica.id,
+        birthDate: new Date("1978-01-01"),
+      },
+    ],
+  });
+
+  await prisma.marriage.create({
+    data: { spouseAId: erica.id, spouseBId: mutongore.id },
+  });
 
   // --- GENERATION 3: DANIEL'S CHILDREN ---
   await prisma.person.createMany({
     data: [
-      {
-        name: "Erica Kaluhi",
-        gender: "female",
-        parentId: daniel.id,
-        birthDate: new Date("1943-01-01"),
-      },
-      {
-        name: "Helen Makungu",
-        gender: "female",
-        parentId: daniel.id,
-        birthDate: new Date("1952-01-01"),
-      },
       {
         name: "Loseno Imire",
         gender: "male",
