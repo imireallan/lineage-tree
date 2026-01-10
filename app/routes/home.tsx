@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useState } from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, Link } from "react-router";
 import { prisma } from "~/db/db.server";
 import "~/styles/lineage.css";
 
@@ -198,7 +198,12 @@ export default function Home() {
         <h1>THE IMIRE FAMILY LINEAGE</h1>
 
         <div className="controls">
-          {/* NEW: Theme Toggle Button */}
+          <div className="bio-link-wrapper">
+            <Link to="/biography" className="bio-link-btn">
+              <span>📖</span>
+              <span>View Jackson's Biography</span>
+            </Link>
+          </div>
           <button
             className="theme-toggle"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}

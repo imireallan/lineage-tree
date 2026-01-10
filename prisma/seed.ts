@@ -167,12 +167,82 @@ async function main() {
       },
     ],
   });
-  await prisma.person.create({
+  const chonerwa = await prisma.person.create({
     data: {
       name: "Chonerwa (Mom unknown)",
       gender: "male",
       parentId: gwadenzwa.id,
     },
+  });
+
+  // Chonerwa child
+  const madahana = await prisma.person.create({
+    data: {
+      name: "Justus Madahana",
+      gender: "male",
+      parentId: chonerwa.id,
+    },
+  });
+
+  // Chonerwa wife
+  const phoebe = await prisma.person.create({
+    data: {
+      name: "Phoebe Rogova",
+      gender: "female",
+      birthDate: new Date("1930-01-10"),
+    },
+  });
+  await prisma.marriage.createMany({
+    data: [{ spouseAId: madahana.id, spouseBId: phoebe.id }],
+  });
+  await prisma.person.createMany({
+    data: [
+      {
+        name: "Julius Chonerwa Madahana",
+        gender: "male",
+        parentId: madahana.id,
+        birthDate: new Date("1952-05-10"),
+        deathDate: new Date("2025-11-10"),
+      },
+      {
+        name: "Kareha",
+        gender: "female",
+        parentId: madahana.id,
+        birthDate: new Date("1954-05-10"),
+      },
+      {
+        name: "Marongo",
+        gender: "male",
+        parentId: madahana.id,
+        birthDate: new Date("1956-05-10"),
+      },
+      {
+        name: "Jaika",
+        gender: "female",
+        parentId: madahana.id,
+        birthDate: new Date("1958-05-10"),
+      },
+      {
+        name: "Alfred Madahana",
+        gender: "male",
+        parentId: madahana.id,
+        birthDate: new Date("1960-05-10"),
+        deathDate: new Date("2019-11-10"),
+      },
+      {
+        name: "Bephrey",
+        gender: "female",
+        parentId: madahana.id,
+        birthDate: new Date("1963-05-10"),
+      },
+      {
+        name: "Melisa",
+        gender: "female",
+        parentId: madahana.id,
+        birthDate: new Date("1967-05-10"),
+        deathDate: new Date("2009-11-10"),
+      },
+    ],
   });
   await prisma.person.create({
     data: {

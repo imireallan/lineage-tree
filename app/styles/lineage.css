@@ -302,3 +302,57 @@
   background: var(--accent);
   border-radius: 5px;
 }
+
+/* app/styles/lineage.css */
+
+.bio-link-wrapper {
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.bio-link-btn {
+  /* Matching the pill shape of your existing UI */
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 24px;
+  border-radius: 50px;
+
+  /* Museum Theme Colors */
+  background: rgba(212, 175, 55, 0.05); /* Very subtle gold tint */
+  border: 1px solid #d4af37; /* The Gold/Amber color from your UI */
+  color: #d4af37;
+
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bio-link-btn:hover {
+  background: #d4af37;
+  color: #1a1a1a; /* Dark text on gold background */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+/* Matching the "Dashed" aesthetic of your member count badge */
+.bio-link-btn {
+  border-style: solid;
+}
+
+/* Light Theme overrides to match your 'Light Parchment' look */
+.light-theme .bio-link-btn {
+  background: rgba(139, 69, 19, 0.05);
+  border-color: #8b4513;
+  color: #8b4513;
+}
+
+.light-theme .bio-link-btn:hover {
+  background: #8b4513;
+  color: #fff;
+}
