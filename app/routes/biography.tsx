@@ -547,7 +547,7 @@ export default function Biography() {
                     { name: "Aziel Jackson Oluoch", date: "16-09-2021" },
                     { name: "Reilly Jackson Rotah", date: "27-05-2022" },
                     { name: "Lenani Vugutsa Imire", date: "10-08-2024" },
-                    { name: "Derian Ishael Oluoch", date: "15-01-2025" },
+                    { name: "Darian Mwakyishai Oluoch", date: "15-01-2025" },
                   ].map((child) => (
                     <div
                       key={child.name}
