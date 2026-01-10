@@ -93,6 +93,34 @@ export default function Biography() {
                   </div>
                 </div>
               </section>
+              {/* BAPTISM & CHURCH RECEPTION */}
+              <section className="mb-10">
+                <h2 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4">
+                  BAPTISM & RECEPTION
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-bold text-lg text-slate-900">
+                      Associate Member
+                    </p>
+                    <p className="text-slate-600 italic leading-tight">
+                      Wekudza Friends Church
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 uppercase tracking-tight">
+                      Date of Reception
+                    </p>
+                    <p className="text-sm text-slate-700">December 30, 1945</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 uppercase tracking-tight">
+                      Presiding Pastor
+                    </p>
+                    <p className="text-sm text-slate-700">Elijah Lisimba</p>
+                  </div>
+                </div>
+              </section>
 
               <section className="mb-10">
                 <h2 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4">
