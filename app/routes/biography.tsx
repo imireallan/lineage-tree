@@ -32,7 +32,7 @@ export default function Biography() {
               Jackson Siva Imire
             </h1>
             <p className="text-amber-400 uppercase tracking-[0.3em] text-sm">
-              Life & Legacy — Born 1945
+              Life & Legacy — Born 1945 Dec 30th
             </p>
           </header>
           {/* Narrative Summary Section */}
@@ -41,9 +41,9 @@ export default function Biography() {
               <p className="mb-4">
                 The story of Jackson Siva Imire is a testament to the power of
                 resilience and the pursuit of knowledge. Born in 1945 to Daniel
-                and Lenah—parents who never had the opportunity for formal
-                schooling—Jackson’s own path to education was a mountain he
-                chose to climb.
+                Imire and Lenah Gimase—parents who never had the opportunity for
+                formal schooling—Jackson’s own path to education was a mountain
+                he chose to climb.
               </p>
               <p className="mb-4">
                 Despite a two-year pause in his studies for lack of school fees,
@@ -88,7 +88,7 @@ export default function Biography() {
                       Circumcision Year: <span className="font-bold">1960</span>
                     </p>
                     <p className="text-sm">
-                      Age Set: <span className="font-bold">I FOMU</span>
+                      Age Set: <span className="font-bold">IFOMU</span>
                     </p>
                   </div>
                 </div>
@@ -100,19 +100,18 @@ export default function Biography() {
                 </h2>
                 <div className="space-y-4 text-sm">
                   <div>
+                    <p className="font-bold">New Mathare (Round About)</p>
+                    <p className="text-slate-600 italic">1974 — 1976</p>
+                  </div>
+                  <div>
                     <p className="font-bold">Umoja Estate</p>
                     <p className="text-slate-600 italic">1977 — Present</p>
                     <p className="text-slate-500 text-xs">Plot K 158</p>
                   </div>
-                  <div>
-                    <p className="font-bold">New Mathare</p>
-                    <p className="text-slate-600 italic">1974 — 1976</p>
-                    <p className="text-slate-500 text-xs">"Round About"</p>
-                  </div>
                 </div>
               </section>
 
-              <section>
+              <section className="mb-10">
                 <h2 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4">
                   Family Union
                 </h2>
@@ -121,8 +120,36 @@ export default function Biography() {
                 </p>
                 <p className="text-xs text-slate-500 italic">August 4, 1980</p>
                 <p className="text-xs text-slate-400 mt-1">
-                  Daughter of Mzee Esau Beneti
+                  Daughter of Mzee Esau Beneti & Rhoda Angeci
                 </p>
+              </section>
+              {/* RETIREMENT SECTION */}
+              <section className="mb-10">
+                <h2 className="text-xs font-black text-amber-700 uppercase tracking-widest mb-4">
+                  Retirement
+                </h2>
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-bold text-slate-900">
+                      Official Retirement
+                    </p>
+                    <p className="text-slate-600 italic">January 1, 1997</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 uppercase tracking-tight">
+                      Retirement Age
+                    </p>
+                    <p className="text-sm text-slate-600">51 Years Old</p>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-slate-800 uppercase tracking-tight">
+                      Total Service
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      25 Years of Dedicated Service
+                    </p>
+                  </div>
+                </div>
               </section>
             </aside>
 
@@ -136,7 +163,7 @@ export default function Biography() {
                 <div className="space-y-8">
                   <div className="flex gap-4">
                     <div className="flex-none w-16 text-amber-700 font-bold">
-                      1956
+                      1956 - 1965
                     </div>
                     <div>
                       <h3 className="font-bold text-lg">
@@ -153,7 +180,7 @@ export default function Biography() {
 
                   <div className="flex gap-4">
                     <div className="flex-none w-16 text-amber-700 font-bold">
-                      1965
+                      1965 - 1966
                     </div>
                     <div>
                       <h3 className="font-bold text-lg">
@@ -179,19 +206,17 @@ export default function Biography() {
 
                   <div className="flex gap-4">
                     <div className="flex-none w-16 text-amber-700 font-bold">
-                      1969
+                      1966 - 1969
                     </div>
                     <div>
                       <h3 className="font-bold text-lg">
-                        Cambridge Local Examination
+                        Guru Nanak (GN) Secondary School Nairobi
                       </h3>
                       <p className="text-slate-600">
-                        Successfully earned the{" "}
-                        <span className="font-bold">
-                          General Certificate of Education (G.C.E.)
-                        </span>{" "}
-                        at G.N. Secondary (Guru Nanak), Nairobi. Sponsored by
-                        sister Truphena and brother-in-law David Anyaloto.
+                        Sat for Cambridge Local Examination and successfully
+                        earned the General Certificate of Education (G.C.E.).
+                        Sponsored by sister Truphena and brother-in-law David
+                        Anyolo.
                       </p>
                     </div>
                   </div>
@@ -205,16 +230,35 @@ export default function Biography() {
                 </h2>
                 <div className="relative pl-8 border-l-2 border-amber-200 space-y-10">
                   <div className="relative">
-                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-900 rounded-full border-4 border-amber-200"></div>
-                    <h3 className="font-bold text-xl leading-none">
-                      Telephone Superintendent II
-                    </h3>
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
+                    <h3 className="font-bold text-xl leading-none">Jobless</h3>
                     <p className="text-amber-700 text-sm font-bold mb-2">
-                      1994 — 1997
+                      1970 - 1972
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
+                    <h3 className="font-bold text-xl leading-none">Training</h3>
+                    <p className="text-amber-700 text-sm font-bold mb-2">
+                      6 months
                     </p>
                     <p className="text-slate-600">
-                      Promoted to senior leadership within the Kenya Posts and
-                      Telecommunication Corporation (KPTC).
+                      Successfully completed the Telephone Operator course at
+                      the Central Training School (Mbagathi). Following
+                      certification, commissioned as a Telephone Operator at the
+                      Nairobi General Post Office
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
+                    <h3 className="font-bold text-xl leading-none">
+                      Telephone Operator
+                    </h3>
+                    <p className="text-amber-700 text-sm font-bold mb-2">
+                      June 19, 1972
+                    </p>
+                    <p className="text-slate-600">
+                      The beginning of 25 years of continuous service.
                     </p>
                   </div>
                   <div className="relative">
@@ -230,15 +274,16 @@ export default function Biography() {
                     </p>
                   </div>
                   <div className="relative">
-                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-900 rounded-full border-4 border-amber-200"></div>
                     <h3 className="font-bold text-xl leading-none">
-                      Telephone Operator
+                      Telephone Superintendent II
                     </h3>
                     <p className="text-amber-700 text-sm font-bold mb-2">
-                      June 19, 1972
+                      1994 — 1997(Retired)
                     </p>
                     <p className="text-slate-600">
-                      The beginning of 25 years of continuous service.
+                      Promoted to senior leadership within the Kenya Posts and
+                      Telecommunication Corporation (KPTC).
                     </p>
                   </div>
                 </div>
@@ -246,7 +291,7 @@ export default function Biography() {
 
               {/* Children Grid */}
               <section>
-                <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mb-8">
+                <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mb-4">
                   The Children of Jackson & Jane
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -257,6 +302,39 @@ export default function Biography() {
                     { name: "Nelly Gimase", date: "20-05-1987" },
                     { name: "Faith Iminza", date: "16-03-1990" },
                     { name: "Allan Imire", date: "03-01-1992" },
+                  ].map((child) => (
+                    <div
+                      key={child.name}
+                      className="flex justify-between items-center p-3 border-b border-slate-100"
+                    >
+                      <span className="font-bold text-slate-800">
+                        {child.name}
+                      </span>
+                      <span className="text-xs font-mono bg-slate-50 px-2 py-1 rounded text-slate-500">
+                        {child.date}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
+              <section>
+                <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mt-4 mb-8">
+                  The Grandchildren of Jackson & Jane
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {[
+                    { name: "Tanesha Afandi Jangay'a", date: "20-10-2010" },
+                    { name: "Briann Tasha Rotah", date: "04-01-2014" },
+                    { name: "Jayden Siva Lovoga", date: "04-07-2014" },
+                    { name: "Bravin Ricky Rotah", date: "16-04-2017" },
+                    { name: "Jason Joseph Lovoga", date: "03-07-2018" },
+                    { name: "Nolan George Oluoch", date: "21-09-2019" },
+                    { name: "Reign Siva Imire", date: "13-06-2021" },
+                    { name: "Nylah Vugutsa Imire", date: "26-08-2021" },
+                    { name: "Aziel Jackson Oluoch", date: "16-09-2021" },
+                    { name: "Reilly Jackson Rotah", date: "27-05-2022" },
+                    { name: "Lenani Vugutsa Imire", date: "10-08-2024" },
+                    { name: "Derian Ishael Oluoch", date: "15-01-2025" },
                   ].map((child) => (
                     <div
                       key={child.name}
