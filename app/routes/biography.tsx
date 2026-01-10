@@ -264,6 +264,21 @@ export default function Biography() {
                   <div className="relative">
                     <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
                     <h3 className="font-bold text-xl leading-none">
+                      Supervisory Training
+                    </h3>
+                    <p className="text-amber-700 text-sm font-bold mb-2">
+                      6 months
+                    </p>
+                    <p className="text-slate-600">
+                      Successfully completed the Telephone Supervisor course at
+                      the Central Training School (Mbagathi). Following
+                      certification, commissioned as a Telephone Supervisor at
+                      the Telephone Exchange Nairobi.
+                    </p>
+                  </div>
+                  <div className="relative">
+                    <div className="absolute -left-[41px] top-1 w-4 h-4 bg-slate-400 rounded-full border-4 border-amber-200"></div>
+                    <h3 className="font-bold text-xl leading-none">
                       Telephone Supervisor
                     </h3>
                     <p className="text-amber-700 text-sm font-bold mb-2">
@@ -378,7 +393,7 @@ export default function Biography() {
                     {/* Sabatia Farmers Cooperative Society */}
                     <div className="bg-white p-4 rounded border-l-4 border-amber-600 shadow-sm hover:shadow-md transition-shadow">
                       <span className="text-xs font-bold text-amber-700 uppercase">
-                        2023 — 
+                        2023 —
                       </span>
                       <h4 className="font-bold text-slate-900">
                         Sabatia Farmers Cooperative Society
@@ -392,10 +407,103 @@ export default function Biography() {
                     </div>
                   </div>
                 </div>
+                {/* Religious & Spiritual Life */}
+                <section className="my-16">
+                  <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mb-8 uppercase tracking-tight flex items-center gap-3">
+                    <span>Faith & Spiritual Journey</span>
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    {/* Milestone 1: Associate Membership */}
+                    <div className="bg-green-50/50 p-5 rounded border border-green-100 relative">
+                      <span className="text-[10px] font-black text-green-700 uppercase tracking-widest block mb-2">
+                        July 1, 2012
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Associate Membership
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Vokoli Yearly Meeting of Friends
+                      </p>
+                      <p className="text-xs mt-3 text-slate-500 font-serif">
+                        Received as an Associate member at Wekudza Village
+                        meeting.
+                      </p>
+                    </div>
+                    <div className="bg-blue-50/50 p-5 rounded border border-blue-100 relative shadow-sm">
+                      <span className="text-[10px] font-black text-blue-700 uppercase tracking-widest block mb-2">
+                        July 1, 2012
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Quaker Men Treasurer
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Wekudza Village Meeting
+                      </p>
+                    </div>
+
+                    {/* Milestone 3: Church Leadership */}
+                    <div className="bg-blue-50/50 p-5 rounded border border-blue-100 relative shadow-sm border-l-4 border-l-blue-500">
+                      <span className="text-[10px] font-black text-blue-700 uppercase tracking-widest block mb-2">
+                        July 1, 2012
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Treasurer Quaker Men
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Vokoli Monthly Meeting
+                      </p>
+                    </div>
+
+                    {/* Milestone 2: Full Membership */}
+                    <div className="bg-rose-50/50 p-5 rounded border border-rose-100 relative">
+                      <span className="text-[10px] font-black text-rose-700 uppercase tracking-widest block mb-2">
+                        Nov 17, 2013
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Full Membership Certificate
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Vokoli Yearly Meeting of Friends
+                      </p>
+                      <p className="text-xs mt-3 text-slate-500 font-serif">
+                        Attained full membership status in the Religious Society
+                        of Friends (Quakers).
+                      </p>
+                    </div>
+                    {/* Milestone 3: Church Leadership */}
+                    <div className="bg-blue-50/50 p-5 rounded border border-blue-100 relative shadow-sm border-l-4 border-l-blue-500">
+                      <span className="text-[10px] font-black text-blue-700 uppercase tracking-widest block mb-2">
+                        Nov 17, 2013
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Chairman of Church Building Project
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Wekudza Village Meeting
+                      </p>
+                    </div>
+                    <div className="bg-blue-50/50 p-5 rounded border border-blue-100 relative shadow-sm border-l-4 border-l-blue-500">
+                      <span className="text-[10px] font-black text-blue-700 uppercase tracking-widest block mb-2">
+                        March 11, 2024
+                      </span>
+                      <h4 className="font-bold text-slate-900 leading-tight mb-1">
+                        Quaker Men Treasurer (Reappointment)
+                      </h4>
+                      <p className="text-xs text-slate-600 italic">
+                        Wekudza Village Meeting
+                      </p>
+                      <p className="text-xs mt-3 text-slate-500 font-serif">
+                        Appointed to serve as treasurer for a 3-year term
+                        representing Quaker men.
+                      </p>
+                    </div>
+                  </div>
+                </section>
               </section>
 
               {/* Children Grid */}
-              <section>
+              <section className="mb-16">
                 <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mb-4">
                   The Children of Jackson & Jane
                 </h2>
