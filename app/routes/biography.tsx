@@ -288,6 +288,111 @@ export default function Biography() {
                   </div>
                 </div>
               </section>
+              {/* Post-Retirement & Community Leadership */}
+              <section className="mb-16">
+                <h2 className="text-2xl font-bold border-b-2 border-slate-900 pb-2 mb-8 uppercase tracking-tight">
+                  Relocation & Community Leadership
+                </h2>
+
+                <div className="bg-amber-50/30 p-6 rounded-lg border border-amber-100 mb-8">
+                  <p className="text-slate-700 leading-relaxed font-serif text-lg italic">
+                    "After retiring, we remained in Nairobi until 2011, then we
+                    relocated back to our rural home. In the years since, I have
+                    dedicated my time to farming and serving my community
+                    through leadership roles in local educational institutions."
+                  </p>
+                </div>
+
+                <div className="space-y-6">
+                  <h3 className="text-sm font-black text-slate-400 uppercase tracking-widest mb-4">
+                    Board of Management Appointments
+                  </h3>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Vokoli Primary School */}
+                    <div className="bg-white p-4 rounded border-l-4 border-slate-400 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-slate-500 uppercase">
+                        2015 — 2018
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Vokoli Primary School
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member, Board of Management
+                      </p>
+                    </div>
+                    {/* Sabatia Primary School (Previous Term) */}
+                    <div className="bg-white p-4 rounded border-l-4 border-slate-400 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-slate-500 uppercase">
+                        2019 — 2022
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Sabatia Primary School
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member, Board of Management
+                      </p>
+                    </div>
+                    {/* Moi Girls' High School - Vokoli */}
+                    <div className="bg-white p-4 rounded border-l-4 border-slate-400 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-slate-500 uppercase">
+                        2022 — 2025
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Moi Girls' High School – Vokoli
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member, Board of Management
+                      </p>
+                    </div>
+                    {/* Sabatia Primary School */}
+                    <div className="bg-white p-4 rounded border-l-4 border-amber-600 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-amber-700 uppercase">
+                        2025 — 2028
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Sabatia Primary School
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member, Board of Management
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-1 italic">
+                        Appointed by Vihiga County Education Board
+                      </p>
+                    </div>
+                    {/* Moi Girls' High School - Vokoli */}
+                    <div className="bg-white p-4 rounded border-l-4 border-amber-600 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-amber-700 uppercase">
+                        2025 — 2028
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Moi Girls' High School – Vokoli
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member, Board of Management
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-1 italic">
+                        Appointed by Vihiga County Education Board
+                      </p>
+                    </div>
+                    {/* Sabatia Farmers Cooperative Society */}
+                    <div className="bg-white p-4 rounded border-l-4 border-amber-600 shadow-sm hover:shadow-md transition-shadow">
+                      <span className="text-xs font-bold text-amber-700 uppercase">
+                        2023 — 
+                      </span>
+                      <h4 className="font-bold text-slate-900">
+                        Sabatia Farmers Cooperative Society
+                      </h4>
+                      <p className="text-sm text-slate-600">
+                        Member of Cooperative Society
+                      </p>
+                      <p className="text-[10px] text-slate-400 mt-1 italic">
+                        Appointed by Sabatia Sub-county Cooperative Society
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
 
               {/* Children Grid */}
               <section>
